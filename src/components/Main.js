@@ -1,24 +1,37 @@
 import close from '../images/close.svg';
 
 function Main() {
+    function handleEditAvatarClick() {
+        document.querySelector('.popup_avatar').classList.add('popup_is-opened');
+    }
+
+    function handleEditProfileClick() {
+        document.querySelector('.popup_edit').classList.add('popup_is-opened');
+    }
+
+    function handleAddPlaceClick() {
+        document.querySelector('.popup_add-place').classList.add('popup_is-opened');
+    }
+
+
     return (
         <>
             <div className="profile root__section">
                 <div className="user-info">
-                    <div className="user-info__photo"></div>
+                    <div className="user-info__photo" onClick={handleEditAvatarClick}></div>
                     <div className="user-info__data">
                         <h1 className="user-info__name">Alsu</h1>
                         <p className="user-info__job">Student</p>
                     </div>
-                    <button className="button_edit_profile">Edit</button>
-                    <button className="button user-info__button">+</button>
+                    <button className="button_edit_profile" onClick={handleEditProfileClick}>Edit</button>
+                    <button className="button user-info__button" onClick={handleAddPlaceClick}>+</button>
                 </div>
             </div>
 
             <div className="places-list root__section"></div>
 
             /* popup Новое место */
-            <div className="popup">
+            <div className="popup popup_add-place">
                 <div className="popup__content">
                     <img
                         src={close}
@@ -89,7 +102,6 @@ function Main() {
                             <span className="input__error"></span>
                         </div>
                         <button
-                            type
                             className="button popup__button_save popup__button_save_new_info"
                         >
                             Сохранить
@@ -109,6 +121,7 @@ function Main() {
                     />
                 </div>
             </div>
+
             /*--popup Обновить аватар */
             <div className="popup popup_avatar">
                 <div className="popup__content">
