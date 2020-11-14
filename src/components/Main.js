@@ -1,18 +1,18 @@
-import close from '../images/close.svg';
+import PopupWithForm from './PopupWithForm';
+import ImagePopup from './ImagePopup';
 
 function Main() {
     function handleEditAvatarClick() {
-        document.querySelector('.popup_avatar').classList.add('popup_is-opened');
+        document.querySelector('.popup_type_avatar').classList.add('popup_is-opened');
     }
 
     function handleEditProfileClick() {
-        document.querySelector('.popup_edit').classList.add('popup_is-opened');
+        document.querySelector('.popup_type_edit-profile').classList.add('popup_is-opened');
     }
 
     function handleAddPlaceClick() {
-        document.querySelector('.popup_add-place').classList.add('popup_is-opened');
+        document.querySelector('.popup_type_add-place').classList.add('popup_is-opened');
     }
-
 
     return (
         <>
@@ -31,14 +31,10 @@ function Main() {
             <div className="places-list root__section"></div>
 
             /* popup Новое место */
-            <div className="popup popup_add-place">
-                <div className="popup__content">
-                    <img
-                        src={close}
-                        alt=""
-                        className="popup__close"
-                    />
-                    <h3 className="popup__title">Новое место</h3>
+            <PopupWithForm
+                title="Новое место"
+                name="add-place"
+                children={
                     <form className="popup__form" name="new_place">
                         <div className="input-container">
                             <input
@@ -62,36 +58,52 @@ function Main() {
                             />
                             <span className="input__error"></span>
                         </div>
-                        <button type className="button popup__button button_disabled">+</button>
+                        <button className="button popup__button button_disabled">+</button>
                     </form>
-                </div>
-            </div>
+                } />
 
-            /* popup Редактировать профиль. К используемым переменным добавлен модификатор edit */
-            <PopupWithForm />
+            /* popup Редактировать профиль */
+            <PopupWithForm
+                title="Редактировать профиль"
+                name="edit-profile"
+                children={<form className="popup__form popup__form_edit" name="new_edit">
+                    <div className="input-container">
+                        <input
+                            required
+                            type="text"
+                            name="username"
+                            className="popup__input popup__input_type_name"
+                            placeholder="Имя"
+                            minlength="2"
+                            maxlength="30"
+                        />
+                        <span className="input__error"></span>
+                    </div>
+                    <div className="input-container">
+                        <input
+                            required
+                            type="text"
+                            name="job"
+                            className="popup__input popup__input_type_job"
+                            placeholder="О себе"
+                            minlength="2"
+                            maxlength="30"
+                        />
+                        <span className="input__error"></span>
+                    </div>
+                    <button
+                        type
+                        className="button popup__button_save popup__button_save_new_info"
+                    >
+                        Сохранить
+                </button>
+                </form>} />
 
-
-            /* popup Открытие попапа с картинкой */
-            <div className="popup popup_image">
-                <div className="popup_image_container">
-                    <img src="#" alt="" className="popup_image_big" />
-                    <img
-                        src={close}
-                        alt=""
-                        className="popup__close"
-                    />
-                </div>
-            </div>
-
-            /*--popup Обновить аватар */
-            <div className="popup popup_avatar">
-                <div className="popup__content">
-                    <img
-                        src={close}
-                        alt=""
-                        className="popup__close"
-                    />
-                    <h3 className="popup__title">Обновить аватар</h3>
+            /* popup Обновить аватар */
+            <PopupWithForm
+                title="Обновить аватар"
+                name="avatar"
+                children={
                     <form className="popup__form popup__form_avatar" name="new_avatar">
                         <div className="input-container">
                             <input
@@ -102,14 +114,16 @@ function Main() {
                                 placeholder="Ссылка на аватар"
                             />
                             <span className="input__error"></span>
-
                         </div>
                         <button type className="button popup__button_save_new_info">
                             Сохранить
             </button>
                     </form>
-                </div>
-            </div>
+                } />
+
+            /* popup Открытие попапа с картинкой */
+            <ImagePopup />
+
         </>
     );
 }

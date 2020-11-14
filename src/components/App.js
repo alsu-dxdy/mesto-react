@@ -3,7 +3,6 @@ import Main from './Main';
 import PopupWithForm from './PopupWithForm';
 import Footer from './Footer';
 
-
 import '../index.css';
 
 function App() {
