@@ -1,30 +1,19 @@
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 
-function Main() {
-    function handleEditAvatarClick() {
-        document.querySelector('.popup_type_avatar').classList.add('popup_is-opened');
-    }
-
-    function handleEditProfileClick() {
-        document.querySelector('.popup_type_edit-profile').classList.add('popup_is-opened');
-    }
-
-    function handleAddPlaceClick() {
-        document.querySelector('.popup_type_add-place').classList.add('popup_is-opened');
-    }
+function Main(props) {
 
     return (
         <>
             <div className="profile root__section">
                 <div className="user-info">
-                    <div className="user-info__photo" onClick={handleEditAvatarClick}></div>
+                    <div className="user-info__photo" onClick={props.onEditAvatar}></div>
                     <div className="user-info__data">
                         <h1 className="user-info__name">Alsu</h1>
                         <p className="user-info__job">Student</p>
                     </div>
-                    <button className="button_edit_profile" onClick={handleEditProfileClick}>Edit</button>
-                    <button className="button user-info__button" onClick={handleAddPlaceClick}>+</button>
+                    <button className="button_edit_profile" onClick={props.onEditProfile}>Edit</button>
+                    <button className="button user-info__button" onClick={props.onAddPlace}>+</button>
                 </div>
             </div>
 
@@ -74,8 +63,8 @@ function Main() {
                             name="username"
                             className="popup__input popup__input_type_name"
                             placeholder="Имя"
-                            minlength="2"
-                            maxlength="30"
+                            minLength="2"
+                            maxLength="30"
                         />
                         <span className="input__error"></span>
                     </div>
@@ -86,8 +75,8 @@ function Main() {
                             name="job"
                             className="popup__input popup__input_type_job"
                             placeholder="О себе"
-                            minlength="2"
-                            maxlength="30"
+                            minLength="2"
+                            maxLength="30"
                         />
                         <span className="input__error"></span>
                     </div>
