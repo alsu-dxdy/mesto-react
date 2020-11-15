@@ -1,4 +1,4 @@
-В данном учебном проекте реализуется внедрение библиотеки React в проект Mesto, реализованный ранее на нативном JS.
+## В данном учебном проекте реализуется внедрение библиотеки React в проект Mesto, реализованный ранее на нативном JS.
 
 ### Что бы начать работу с проектом:
 
@@ -15,6 +15,6 @@ npm start
 ```
 - Enjoy!
 
-# Getting Started with Create React App
+Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
