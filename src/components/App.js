@@ -25,6 +25,12 @@ function App() {
     setisEditAvatarPopupOpen(!isEditAvatarPopupOpen);
   }
 
+  function closeAllPopups() {
+    setisEditProfilePopupOpen(false);
+    setisAddPlacePopupOpen(false);
+    setisEditAvatarPopupOpen(false);
+  }
+
   return (
     <div className="App">
       <div className="root">
@@ -39,6 +45,7 @@ function App() {
           title="Новое место"
           name="add-place"
           isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
           children={
             <form className="popup__form" name="new_place">
               <div className="input-container">
@@ -72,6 +79,7 @@ function App() {
           title="Редактировать профиль"
           name="edit-profile"
           isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
           children={<form className="popup__form popup__form_edit" name="new_edit">
             <div className="input-container">
               <input
@@ -111,6 +119,7 @@ function App() {
           title="Обновить аватар"
           name="avatar"
           isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
           children={
             <form className="popup__form popup__form_avatar" name="new_avatar">
               <div className="input-container">
