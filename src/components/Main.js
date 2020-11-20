@@ -1,4 +1,5 @@
 import React from 'react';
+import Card from './Card';
 import {
     api
 } from '../utils/API';
@@ -8,25 +9,26 @@ function Main(props) {
     const [userName, setUserName] = React.useState('');
     const [userDescription, setuserDescription] = React.useState('');
     const [userAvatar, setuserAvatar] = React.useState('');
+    const [cards, setCards] = React.useState([]);
 
     React.useEffect(() => {
-        api
-            .getUserInfo()
-            .then(userData => {
+
+        Promise.all([api.getUserInfo(), api.getInitialCards()]).then(
+            ([userData, initialCards]) => {
                 setUserName(userData.name);
                 setuserDescription(userData.about);
                 setuserAvatar(userData.avatar);
-            })
+                setCards(initialCards);
+            }
+        )
             .catch((err) => {
                 alert(err.message);
+                console.log(err);
             });
     });
 
-    /* Значение можно задать сразу (без промежуточной переменной). 
-     Для этого используются двойные фигурные скобки {{...}}: 
-     внешние означают подстановку значения, 
-     а внутренние относятся к объекту, описывающему набор стилей */
-
+    const firstTenCards = cards.slice(0, 10);
+    console.log(firstTenCards);
     return (
         <>
             <div className="profile root__section">
@@ -41,8 +43,13 @@ function Main(props) {
                 </div>
             </div>
 
-            <div className="places-list root__section"></div>
-
+            <div className="places-list root__section">
+                {
+                    firstTenCards.map(item =>
+                        <Card key={item._id} card={item} />
+                    )
+                }
+            </div>
         </>
     );
 }
