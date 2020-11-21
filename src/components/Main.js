@@ -22,7 +22,6 @@ function Main(props) {
             }
         )
             .catch((err) => {
-                alert(err.message);
                 console.log(err);
             });
     });
