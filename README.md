@@ -11,6 +11,12 @@ https://alsu-dxdy.github.io/mesto-react/
 git clone https://github.com/alsu-dxdy/mesto-react
 ```
 
+- Установить зависимости: в папке проекта в терминале ввести:
+
+```
+npm install
+```
+
 - Запустить проект: в папке проекта в терминале ввести:
 
 ```
