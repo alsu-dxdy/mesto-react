@@ -4,6 +4,9 @@ import Main from './Main';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import Footer from './Footer';
+import {
+  api
+} from '../utils/API';
 
 import '../index.css';
 
@@ -12,6 +15,27 @@ function App() {
   const [isEditProfilePopupOpen, setisEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setisAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = React.useState(false);
+
+  const [userName, setUserName] = React.useState('');
+  const [userDescription, setuserDescription] = React.useState('');
+  const [userAvatar, setuserAvatar] = React.useState('');
+  const [cards, setCards] = React.useState([]);
+
+  React.useEffect(() => {
+
+    Promise.all([api.getUserInfo(), api.getInitialCards()]).then(
+      ([userData, initialCards]) => {
+        const myCards = initialCards.filter(item => item.owner._id === userData._id);
+        setUserName(userData.name);
+        setuserDescription(userData.about);
+        setuserAvatar(userData.avatar);
+        setCards(myCards);
+      }
+    )
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   function handleEditProfileClick() {
     setisEditProfilePopupOpen(!isEditProfilePopupOpen);
@@ -37,7 +61,12 @@ function App() {
       <Main
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
-        onEditAvatar={handleEditAvatarClick} />
+        onEditAvatar={handleEditAvatarClick}
+        cards={cards}
+        userName={userName}
+        userDescription={userDescription}
+        userAvatar={userAvatar}
+      />
 
       /* popup Новое место */
       <PopupWithForm
