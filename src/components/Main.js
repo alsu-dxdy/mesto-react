@@ -9,25 +9,27 @@ function Main(props) {
     const [userName, setUserName] = React.useState('');
     const [userDescription, setuserDescription] = React.useState('');
     const [userAvatar, setuserAvatar] = React.useState('');
+    const [userID, setuserID] = React.useState('');
+
     const [cards, setCards] = React.useState([]);
 
     React.useEffect(() => {
 
         Promise.all([api.getUserInfo(), api.getInitialCards()]).then(
             ([userData, initialCards]) => {
+                const myCards = initialCards.filter(item => item.owner._id === userData._id);
                 setUserName(userData.name);
                 setuserDescription(userData.about);
                 setuserAvatar(userData.avatar);
-                setCards(initialCards);
+                setCards(myCards);
+                setuserID(userData._id);
             }
         )
             .catch((err) => {
                 console.log(err);
             });
-    });
+    }, []);
 
-    const firstTenCards = cards.slice(0, 10);
-    console.log(firstTenCards);
     return (
         <>
             <div className="profile root__section">
@@ -44,7 +46,7 @@ function Main(props) {
 
             <div className="places-list root__section">
                 {
-                    firstTenCards.map(item =>
+                    cards.map(item =>
                         <Card key={item._id} card={item} />
                     )
                 }
