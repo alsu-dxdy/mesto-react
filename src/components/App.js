@@ -3,6 +3,7 @@ import Header from './Header';
 import Main from './Main';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
+import AddPlacePopup from './AddPlacePopup';
 import Footer from './Footer';
 import {
   api
@@ -55,9 +56,21 @@ function App() {
     setisEditAvatarPopupOpen(false);
   }
 
+  function handleAddPlaceApi(data) {
+    api.addCard(data.name, data.link)
+      .then((newCardData) => {
+        setCards([...cards, newCardData]);
+        closeAllPopups()
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      })
+  }
+
   return (
     <div className="root">
       <Header />
+      {/*к названиям onEditProfile...onEditAvatar добавить слово Popup */}
       <Main
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
@@ -68,39 +81,8 @@ function App() {
         userAvatar={userAvatar}
       />
 
-      /* popup Новое место */
-      <PopupWithForm
-        title="Новое место"
-        name="add-place"
-        isOpen={isAddPlacePopupOpen}
-        onClose={closeAllPopups}
-        children={
-          <form className="popup__form" name="new_place">
-            <div className="input-container">
-              <input
-                required
-                type="text"
-                name="name"
-                className="popup__input popup__input_type_name"
-                placeholder="Название"
-                minLength="2"
-                maxLength="30"
-              />
-              <span className="input__error"></span>
-            </div>
-            <div className="input-container">
-              <input
-                required
-                type="url"
-                name="link"
-                className="popup__input popup__input_type_link-url"
-                placeholder="Ссылка на картинку"
-              />
-              <span className="input__error"></span>
-            </div>
-            <button className="button popup__button button_disabled">+</button>
-          </form>
-        } />
+      <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}
+        onAddPlaceSubmit={handleAddPlaceApi} />
 
       /* popup Редактировать профиль */
       <PopupWithForm
