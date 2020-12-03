@@ -7,7 +7,7 @@ function PopupWithForm(props) {
             <div className="popup__content">
                 <img onClick={props.onClose}
                     src={close}
-                    alt=""
+                    alt="Закрыть"
                     className="popup__close"
                 />
                 <h3 className="popup__title">{props.title}</h3>

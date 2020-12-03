@@ -21,7 +21,7 @@ function AddPlacePopup(props) {
             name="add-place"
             // onSubmit={handleAddPlaceSubmit}
             isOpen={props.isOpen}
-            close={props.onClose}
+            onClose={props.onClose}
             children={
                 <form className="popup__form" name="new_place">
                     <div className="input-container">
