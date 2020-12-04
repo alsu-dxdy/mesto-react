@@ -1,11 +1,14 @@
 import close from '../images/close.svg';
 
-function ImagePopup() {
+function ImagePopup(props) {
+    const { isOpen, onClose, link, name } = props;
+
     return (
-        <div className="popup popup_image">
+        <div className={`popup popup_image ${isOpen && 'popup_is-opened'} `} >
             <div className="popup_image_container">
-                <img src="#" alt="" className="popup_image_big" />
+                <img src={link} alt={name} className="popup_image_big" />
                 <img
+                    onClick={onClose}
                     src={close}
                     alt=""
                     className="popup__close"

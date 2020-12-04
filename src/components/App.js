@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from './Header';
 import Main from './Main';
 import PopupWithForm from './PopupWithForm';
@@ -13,14 +13,20 @@ import '../index.css';
 
 function App() {
   // Хук, управляющий внутренним состоянием.
-  const [isEditProfilePopupOpen, setisEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setisAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = React.useState(false);
+  const [isEditProfilePopupOpen, setisEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setisAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = useState(false);
 
-  const [userName, setUserName] = React.useState('');
-  const [userDescription, setuserDescription] = React.useState('');
-  const [userAvatar, setuserAvatar] = React.useState('');
-  const [cards, setCards] = React.useState([]);
+  const [userName, setUserName] = useState('');
+  const [userDescription, setuserDescription] = useState('');
+  const [userAvatar, setuserAvatar] = useState('');
+  const [cards, setCards] = useState([]);
+
+  const [selectedCard, setSelectedCard] = useState({
+    isImageOpen: false,
+    link: '',
+    name: '',
+  });
 
   React.useEffect(() => {
 
@@ -38,6 +44,7 @@ function App() {
       });
   }, []);
 
+  /*Открытие попапов*/
   function handleEditProfileClick() {
     setisEditProfilePopupOpen(!isEditProfilePopupOpen);
   }
@@ -50,12 +57,23 @@ function App() {
     setisEditAvatarPopupOpen(!isEditAvatarPopupOpen);
   }
 
+  function handleCardClick(card) {
+    const { link, name } = card;
+    setSelectedCard({ isImageOpen: true, link: link, name: name });
+  }
+  /*Закрытие попапов*/
   function closeAllPopups() {
     setisEditProfilePopupOpen(false);
     setisAddPlacePopupOpen(false);
     setisEditAvatarPopupOpen(false);
+    setSelectedCard({
+      isImageOpen: false,
+      link: '',
+      name: '',
+    });
   }
 
+  /*Запрос на добавление новой карточки*/
   function handleAddPlaceApi(data) {
     api.addCard(data.name, data.link)
       .then((newCardData) => {
@@ -76,6 +94,7 @@ function App() {
         onAddPlace={handleAddPlaceClick}
         onEditAvatar={handleEditAvatarClick}
         cards={cards}
+        onCardClick={handleCardClick}
         userName={userName}
         userDescription={userDescription}
         userAvatar={userAvatar}
@@ -84,7 +103,7 @@ function App() {
       <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}
         onAddPlaceSubmit={handleAddPlaceApi} />
 
-      /* popup Редактировать профиль */
+      {/* popup Редактировать профиль */}
       <PopupWithForm
         title="Редактировать профиль"
         name="edit-profile"
@@ -123,7 +142,7 @@ function App() {
         </form>} />
 
 
-      /* popup Обновить аватар */
+      {/* popup Обновить аватар */}
       <PopupWithForm
         title="Обновить аватар"
         name="avatar"
@@ -147,8 +166,13 @@ function App() {
           </form>
         } />
 
-      /* popup Открытие попапа с картинкой */
-      <ImagePopup />
+      {/* popup Открытие попапа с картинкой */}
+      <ImagePopup
+        name={selectedCard.name}
+        link={selectedCard.link}
+        onClose={closeAllPopups}
+        isOpen={selectedCard.isImageOpen}
+      />
       <Footer />
     </div>
 
