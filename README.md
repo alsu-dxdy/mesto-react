@@ -1,9 +1,16 @@
-## В данном учебном проекте реализуется внедрение библиотеки React в проект Mesto, реализованный ранее на нативном JS.
+#  Mesto-react
 
-Публикация:
+### Описание проекта:
+В данном учебном проекте реализуется внедрение библиотеки React в проект Mesto, реализованный ранее на нативном JS.
+
+### Публикация:
 https://alsu-dxdy.github.io/mesto-react/
 
-### Что бы начать работу с проектом:
+### Стек проекта:
+- React
+- JS
+
+### Чтобы начать работу с проектом:
 
 - Клонировать репозиторий:
 
@@ -23,7 +30,5 @@ npm install
 npm start
 ```
 - Enjoy!
-
-Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
