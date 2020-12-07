@@ -73,6 +73,12 @@ function App() {
     });
   }
 
+  function closeImagePopupClickOutContent(e) {
+    if (e.target.closest('.popup_image_container') == null) {
+      closeAllPopups();
+    }
+  }
+
   /*Запрос на добавление новой карточки*/
   function handleAddPlaceApi(data) {
     api.addCard(data.name, data.link)
@@ -172,6 +178,7 @@ function App() {
         link={selectedCard.link}
         onClose={closeAllPopups}
         isOpen={selectedCard.isImageOpen}
+        closeImagePopupClickOutContent={closeImagePopupClickOutContent}
       />
       <Footer />
     </div>
