@@ -1,1 +1,1 @@
-export const serverUrl = 'http://nomoreparties.co/cohort8';
+export const serverUrl = 'https://nomoreparties.co/cohort8';
