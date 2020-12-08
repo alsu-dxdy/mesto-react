@@ -73,6 +73,14 @@ function App() {
     });
   }
 
+  // Закрытие попапа с формой: клик вне контента
+  function closePopupFormClickOutContent(e) {
+    if (e.target.closest('.popup__content') == null) {
+      closeAllPopups();
+    }
+  }
+
+  // Закрытие попапа с I magepopup: клик вне контента
   function closeImagePopupClickOutContent(e) {
     if (e.target.closest('.popup_image_container') == null) {
       closeAllPopups();
@@ -107,7 +115,7 @@ function App() {
       />
 
       <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}
-        onAddPlaceSubmit={handleAddPlaceApi} />
+        onAddPlaceSubmit={handleAddPlaceApi} closePopupFormClickOutContent={closePopupFormClickOutContent} />
 
       {/* popup Редактировать профиль */}
       <PopupWithForm
