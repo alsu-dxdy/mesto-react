@@ -8,6 +8,7 @@ import Footer from './Footer';
 import {
   api
 } from '../utils/API';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 import '../index.css';
 
@@ -101,94 +102,96 @@ function App() {
 
   return (
     <div className="root">
-      <Header />
-      {/*к названиям onEditProfile...onEditAvatar добавить слово Popup */}
-      <Main
-        onEditProfile={handleEditProfileClick}
-        onAddPlace={handleAddPlaceClick}
-        onEditAvatar={handleEditAvatarClick}
-        cards={cards}
-        onCardClick={handleCardClick}
-        userName={userName}
-        userDescription={userDescription}
-        userAvatar={userAvatar}
-      />
+      <CurrentUserContext.Provider value={currentUser}>
+        <Header />
+        {/*к названиям onEditProfile...onEditAvatar добавить слово Popup */}
+        <Main
+          onEditProfile={handleEditProfileClick}
+          onAddPlace={handleAddPlaceClick}
+          onEditAvatar={handleEditAvatarClick}
+          cards={cards}
+          onCardClick={handleCardClick}
+          userName={userName}
+          userDescription={userDescription}
+          userAvatar={userAvatar}
+        />
 
-      <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}
-        onAddPlaceSubmit={handleAddPlaceApi} closePopupFormClickOutContent={closePopupFormClickOutContent} />
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}
+          onAddPlaceSubmit={handleAddPlaceApi} closePopupFormClickOutContent={closePopupFormClickOutContent} />
 
-      {/* popup Редактировать профиль */}
-      <PopupWithForm
-        title="Редактировать профиль"
-        name="edit-profile"
-        isOpen={isEditProfilePopupOpen}
-        onClose={closeAllPopups}
-        children={<form className="popup__form popup__form_edit" name="new_edit">
-          <div className="input-container">
-            <input
-              required
-              type="text"
-              name="username"
-              className="popup__input popup__input_type_name"
-              placeholder="Имя"
-              minLength="2"
-              maxLength="30"
-            />
-            <span className="input__error"></span>
-          </div>
-          <div className="input-container">
-            <input
-              required
-              type="text"
-              name="job"
-              className="popup__input popup__input_type_job"
-              placeholder="О себе"
-              minLength="2"
-              maxLength="30"
-            />
-            <span className="input__error"></span>
-          </div>
-          <button
-            className="button popup__button_save popup__button_save_new_info"
-          >
-            Сохранить
-                </button>
-        </form>} />
-
-
-      {/* popup Обновить аватар */}
-      <PopupWithForm
-        title="Обновить аватар"
-        name="avatar"
-        isOpen={isEditAvatarPopupOpen}
-        onClose={closeAllPopups}
-        children={
-          <form className="popup__form popup__form_avatar" name="new_avatar">
+        {/* popup Редактировать профиль */}
+        <PopupWithForm
+          title="Редактировать профиль"
+          name="edit-profile"
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          children={<form className="popup__form popup__form_edit" name="new_edit">
             <div className="input-container">
               <input
                 required
-                type="url"
-                name="avatar"
-                className="popup__input popup__input_type_link-url"
-                placeholder="Ссылка на аватар"
+                type="text"
+                name="username"
+                className="popup__input popup__input_type_name"
+                placeholder="Имя"
+                minLength="2"
+                maxLength="30"
               />
               <span className="input__error"></span>
             </div>
-            <button className="button popup__button_save_new_info">
+            <div className="input-container">
+              <input
+                required
+                type="text"
+                name="job"
+                className="popup__input popup__input_type_job"
+                placeholder="О себе"
+                minLength="2"
+                maxLength="30"
+              />
+              <span className="input__error"></span>
+            </div>
+            <button
+              className="button popup__button_save popup__button_save_new_info"
+            >
               Сохранить
-            </button>
-          </form>
-        } />
+                </button>
+          </form>} />
 
-      {/* popup Открытие попапа с картинкой */}
-      <ImagePopup
-        name={selectedCard.name}
-        link={selectedCard.link}
-        onClose={closeAllPopups}
-        isOpen={selectedCard.isImageOpen}
-        closeImagePopupClickOutContent={closeImagePopupClickOutContent}
-      />
-      <Footer />
+
+        {/* popup Обновить аватар */}
+        <PopupWithForm
+          title="Обновить аватар"
+          name="avatar"
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          children={
+            <form className="popup__form popup__form_avatar" name="new_avatar">
+              <div className="input-container">
+                <input
+                  required
+                  type="url"
+                  name="avatar"
+                  className="popup__input popup__input_type_link-url"
+                  placeholder="Ссылка на аватар"
+                />
+                <span className="input__error"></span>
+              </div>
+              <button className="button popup__button_save_new_info">
+                Сохранить
+            </button>
+            </form>
+          } />
+
+        {/* popup Открытие попапа с картинкой */}
+        <ImagePopup
+          name={selectedCard.name}
+          link={selectedCard.link}
+          onClose={closeAllPopups}
+          isOpen={selectedCard.isImageOpen}
+          closeImagePopupClickOutContent={closeImagePopupClickOutContent}
+        />
+        <Footer />
+      </CurrentUserContext.Provider>
     </div>
 
   );
