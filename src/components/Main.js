@@ -8,7 +8,6 @@ function Main(props) {
     const {
         onEditAvatar, onEditProfile, onAddPlace,
         onCardClick, cards,
-        //userAvatar, userName, userDescription,
     } = props;
 
     return (
