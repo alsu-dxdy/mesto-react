@@ -18,9 +18,8 @@ function App() {
   const [isAddPlacePopupOpen, setisAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = useState(false);
 
-  const [userName, setUserName] = useState('');
-  const [userDescription, setuserDescription] = useState('');
-  const [userAvatar, setuserAvatar] = useState('');
+  // <CurrentUserContext.Provider value={currentUser}>
+  const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = useState([]);
 
   const [selectedCard, setSelectedCard] = useState({
@@ -34,9 +33,7 @@ function App() {
     Promise.all([api.getUserInfo(), api.getInitialCards()]).then(
       ([userData, initialCards]) => {
         const myCards = initialCards.filter(item => item.owner._id === userData._id);
-        setUserName(userData.name);
-        setuserDescription(userData.about);
-        setuserAvatar(userData.avatar);
+        setCurrentUser(userData);
         setCards(myCards);
       }
     )
@@ -111,9 +108,6 @@ function App() {
           onEditAvatar={handleEditAvatarClick}
           cards={cards}
           onCardClick={handleCardClick}
-          userName={userName}
-          userDescription={userDescription}
-          userAvatar={userAvatar}
         />
 
         <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}
