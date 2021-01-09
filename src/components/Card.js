@@ -31,8 +31,8 @@ function Card(props) {
 
     return (
         <div className="place-card">
+            <button onClick={handleDeleteClick} className={cardDeleteButtonClassName}></button>
             <div className="place-card__image" onClick={handleClick} style={{ backgroundImage: `url(${card.link})` }}>
-                <button onClick={handleDeleteClick} className={cardDeleteButtonClassName}></button>
             </div>
             <div className="place-card__description">
                 <h3 className="place-card__name">{card.name}</h3>
