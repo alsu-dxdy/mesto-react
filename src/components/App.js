@@ -42,6 +42,32 @@ function App() {
       });
   }, []);
 
+  // Добавление новой карточки
+  function handleAddPlaceApi(data) {
+    api.addCard(data.name, data.link)
+      .then((newCardData) => {
+        setCards([...cards, newCardData]);
+        closeAllPopups()
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      })
+  }
+
+  // Лайк/дизлайк карточки
+  function handleCardLike(card) {
+    // Снова проверяем, есть ли уже лайк на этой карточке
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+      // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
+      const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+      // Обновляем стейт
+      setCards(newCards);
+    });
+  }
+
   /*Открытие попапов*/
   function handleEditProfileClick() {
     setisEditProfilePopupOpen(!isEditProfilePopupOpen);
@@ -59,6 +85,7 @@ function App() {
     const { link, name } = card;
     setSelectedCard({ isImageOpen: true, link: link, name: name });
   }
+
   /*Закрытие попапов*/
   function closeAllPopups() {
     setisEditProfilePopupOpen(false);
@@ -78,23 +105,11 @@ function App() {
     }
   }
 
-  // Закрытие попапа с I magepopup: клик вне контента
+  // Закрытие попапа с Imagepopup: клик вне контента
   function closeImagePopupClickOutContent(e) {
     if (e.target.closest('.popup_image_container') == null) {
       closeAllPopups();
     }
-  }
-
-  /*Запрос на добавление новой карточки*/
-  function handleAddPlaceApi(data) {
-    api.addCard(data.name, data.link)
-      .then((newCardData) => {
-        setCards([...cards, newCardData]);
-        closeAllPopups()
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      })
   }
 
   return (
@@ -108,6 +123,7 @@ function App() {
           onEditAvatar={handleEditAvatarClick}
           cards={cards}
           onCardClick={handleCardClick}
+          onCardLike={handleCardLike}
         />
 
         <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}

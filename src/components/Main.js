@@ -7,7 +7,7 @@ function Main(props) {
 
     const {
         onEditAvatar, onEditProfile, onAddPlace,
-        onCardClick, cards,
+        onCardClick, onCardLike, cards,
     } = props;
 
     return (
@@ -27,7 +27,7 @@ function Main(props) {
             <div className="places-list root__section">
                 {
                     cards.map(item =>
-                        <Card key={item._id} card={item} onCardClick={onCardClick} />
+                        <Card key={item._id} card={item} onCardClick={onCardClick} onCardLike={onCardLike} />
                     )
                 }
             </div>

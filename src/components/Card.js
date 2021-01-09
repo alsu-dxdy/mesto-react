@@ -2,7 +2,7 @@ import React from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function Card(props) {
-    const { card, onCardClick } = props;
+    const { card, onCardClick, onCardLike } = props;
     const currentUser = React.useContext(CurrentUserContext);
     // Определяем, являемся ли мы владельцем текущей карточки
     const isOwn = card.owner._id === currentUser._id;
@@ -21,6 +21,10 @@ function Card(props) {
         onCardClick(card);
     }
 
+    function handleLikeClick() {
+        onCardLike(card);
+    }
+
     return (
         <div className="place-card">
             <div className="place-card__image" onClick={handleClick} style={{ backgroundImage: `url(${card.link})` }}>
@@ -29,7 +33,7 @@ function Card(props) {
             <div className="place-card__description">
                 <h3 className="place-card__name">{card.name}</h3>
                 <div className="place-card__right-container">
-                    <button className={cardLikeButtonClassName} />
+                    <button onClick={handleLikeClick} className={cardLikeButtonClassName} />
                     <p className="place-card__count">{card.likes.length}</p>
                 </div>
             </div>

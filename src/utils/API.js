@@ -70,24 +70,6 @@ class Api {
     }).then(res => this._getResponseData(res));
   }
 
-  addLike(cardId) {
-    return fetch(this.options.baseUrl + `/cards/like/${cardId}`, {
-      method: "PUT",
-      headers: {
-        authorization: this.options.headers.authorization
-      }
-    }).then(res => this._getResponseData(res));
-  }
-
-  removeLike(cardId) {
-    return fetch(this.options.baseUrl + `/cards/like/${cardId}`, {
-      method: "DELETE",
-      headers: {
-        authorization: this.options.headers.authorization
-      }
-    }).then(res => this._getResponseData(res));
-  }
-
   sendServerAvatar(url) {
     return fetch(this.options.baseUrl + `/users/me/avatar`, {
       method: "PATCH",
@@ -98,6 +80,15 @@ class Api {
       body: JSON.stringify({
         avatar: url
       })
+    }).then(res => this._getResponseData(res));
+  }
+
+  changeLikeCardStatus(id, isLiked) {
+    return fetch(this.options.baseUrl + `/cards/like/${id}`, {
+      method: `${isLiked ? 'PUT' : 'DELETE'}`,
+      headers: {
+        authorization: this.options.headers.authorization
+      }
     }).then(res => this._getResponseData(res));
   }
 }
