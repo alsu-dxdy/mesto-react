@@ -68,6 +68,17 @@ function App() {
     });
   }
 
+  // Удаление карточки
+  function handleCardDelete(card) {
+    api.deleteCard(card._id).then(() => {
+      // Формируем новый массив на основе имеющегося, 
+      // подставляя в него несовпадения с удаляемой карточкой
+      const newCards = cards.filter((c) => c._id !== card._id);
+      // Обновляем стейт
+      setCards(newCards);
+    });
+  }
+
   /*Открытие попапов*/
   function handleEditProfileClick() {
     setisEditProfilePopupOpen(!isEditProfilePopupOpen);
@@ -124,6 +135,7 @@ function App() {
           cards={cards}
           onCardClick={handleCardClick}
           onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
         />
 
         <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}
