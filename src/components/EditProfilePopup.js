@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PopupWithForm from './PopupWithForm';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function EditProfilePopup(props) {
     const { isOpen, onClose } = props; // isEditProfilePopupOpen, closeAllPopups соот-но
@@ -7,11 +8,20 @@ function EditProfilePopup(props) {
     const [name, setName] = React.useState('');
     const [description, setDescription] = useState('');
 
+    // Подписка на контекст
+    const currentUser = React.useContext(CurrentUserContext);
+
+    // После загрузки текущего пользователя из API
+    // его данные будут использованы в управляемых компонентах.
+    React.useEffect(() => {
+        setName(currentUser.name);
+        setDescription(currentUser.about);
+    }, [currentUser]);
+
     function handleInputChange(e) {
         e.target.name === 'username'
             ? setName(e.target.value)
             : setDescription(e.target.value);
-
     }
 
     return (
