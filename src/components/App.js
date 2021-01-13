@@ -61,32 +61,44 @@ function App() {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
 
     // Отправляем запрос в API и получаем обновлённые данные карточки
-    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-      // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
-      const newCards = cards.map((c) => c._id === card._id ? newCard : c);
-      // Обновляем стейт
-      setCards(newCards);
-    });
+    api.changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
+        const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+        // Обновляем стейт
+        setCards(newCards);
+      })
+      .catch(err => {
+        console.log(`Ошибка: ${err}`);
+      });
   }
 
   // Удаление карточки
   function handleCardDelete(card) {
-    api.deleteCard(card._id).then(() => {
-      // Формируем новый массив на основе имеющегося, 
-      // подставляя в него несовпадения с удаляемой карточкой
-      const newCards = cards.filter((c) => c._id !== card._id);
-      // Обновляем стейт
-      setCards(newCards);
-    });
+    api.deleteCard(card._id)
+      .then(() => {
+        // Формируем новый массив на основе имеющегося, 
+        // подставляя в него несовпадения с удаляемой карточкой
+        const newCards = cards.filter((c) => c._id !== card._id);
+        // Обновляем стейт
+        setCards(newCards);
+      })
+      .catch(err => {
+        console.log(`Ошибка: ${err}`);
+      });
   }
 
   // Редактирование профиля
   function handleUpdateUser(data) {
-    api.setUserInfo(data.name, data.about).then((updatedUserData) => {
-      // Обновляем стейт
-      setCurrentUser(updatedUserData);
-      closeAllPopups();
-    });
+    api.setUserInfo(data.name, data.about)
+      .then((updatedUserData) => {
+        // Обновляем стейт
+        setCurrentUser(updatedUserData);
+        closeAllPopups();
+      })
+      .catch(err => {
+        console.log(`Ошибка: ${err}`);
+      });
   }
 
   /*Открытие попапов*/
