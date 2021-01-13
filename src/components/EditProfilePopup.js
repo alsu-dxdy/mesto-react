@@ -3,7 +3,7 @@ import PopupWithForm from './PopupWithForm';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function EditProfilePopup(props) {
-    const { isOpen, onClose } = props; // isEditProfilePopupOpen, closeAllPopups соот-но
+    const { isOpen, onClose, onUpdateUser } = props; // isEditProfilePopupOpen, closeAllPopups соот-но
 
     const [name, setName] = React.useState('');
     const [description, setDescription] = useState('');
@@ -22,6 +22,16 @@ function EditProfilePopup(props) {
         e.target.name === 'username'
             ? setName(e.target.value)
             : setDescription(e.target.value);
+    }
+
+    function handleEditProfileSubmit(e) {
+        // Запрещаем браузеру переходить по адресу формы
+        e.preventDefault();
+        // Передаём значения управляемых компонентов во внешний обработчик
+        onUpdateUser({
+            name: name,
+            about: description,
+        });
     }
 
     return (
@@ -61,6 +71,7 @@ function EditProfilePopup(props) {
                     <span className="input__error"></span>
                 </div>
                 <button
+                    onClick={handleEditProfileSubmit}
                     className="button popup__button_save popup__button_save_new_info"
                 >
                     Сохранить

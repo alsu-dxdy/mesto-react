@@ -33,7 +33,7 @@ class Api {
     }).then(res => this._getResponseData(res));
   }
 
-  sendServerUserInfo(name, job) {
+  setUserInfo(name, job) {
     return fetch(this.options.baseUrl + `/users/me`, {
       method: "PATCH",
       headers: {

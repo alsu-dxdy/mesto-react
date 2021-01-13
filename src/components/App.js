@@ -80,6 +80,15 @@ function App() {
     });
   }
 
+  // Редактирование профиля
+  function handleUpdateUser(data) {
+    api.setUserInfo(data.name, data.about).then((updatedUserData) => {
+      // Обновляем стейт
+      setCurrentUser(updatedUserData);
+      closeAllPopups();
+    });
+  }
+
   /*Открытие попапов*/
   function handleEditProfileClick() {
     setisEditProfilePopupOpen(!isEditProfilePopupOpen);
@@ -143,7 +152,8 @@ function App() {
           onAddPlaceSubmit={handleAddPlaceApi} closePopupFormClickOutContent={closePopupFormClickOutContent} />
 
         {/* popup Редактировать профиль */}
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser} />
 
         {/* popup Обновить аватар */}
         <PopupWithForm
