@@ -1,21 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PopupWithForm from './PopupWithForm';
 
 function EditProfilePopup(props) {
     const { isOpen, onClose } = props; // isEditProfilePopupOpen, closeAllPopups соот-но
 
-    // const inputNameRef = React.useRef();
-    // const inputLinkRef = React.useRef();
+    const [name, setName] = React.useState('');
+    const [description, setDescription] = useState('');
 
-    // function handleAddPlaceSubmit(e) {
-    //     e.preventDefault();
-    //     props.onAddPlaceSubmit({
-    //         name: inputNameRef.current.value,
-    //         link: inputLinkRef.current.value
-    //     });
-    //     inputNameRef.current.value = '';
-    //     inputLinkRef.current.value = '';
-    // }
+    function handleInputChange(e) {
+        e.target.name === 'username'
+            ? setName(e.target.value)
+            : setDescription(e.target.value);
+
+    }
+
     return (
         /* popup Редактировать профиль */
         <PopupWithForm
@@ -28,11 +26,13 @@ function EditProfilePopup(props) {
                     <input
                         required
                         type="text"
+                        value={name || ''}
                         name="username"
                         className="popup__input popup__input_type_name"
                         placeholder="Имя"
                         minLength="2"
                         maxLength="30"
+                        onChange={handleInputChange}
                     />
                     <span className="input__error"></span>
                 </div>
@@ -40,11 +40,13 @@ function EditProfilePopup(props) {
                     <input
                         required
                         type="text"
+                        value={description || ''}
                         name="job"
                         className="popup__input popup__input_type_job"
                         placeholder="О себе"
                         minLength="2"
                         maxLength="30"
+                        onChange={handleInputChange}
                     />
                     <span className="input__error"></span>
                 </div>
